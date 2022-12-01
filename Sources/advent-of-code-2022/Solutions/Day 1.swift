@@ -9,29 +9,21 @@ import Foundation
 
 class Day1 {
     func solve1(input: String) -> Int? {
-        return input
-            .components(separatedBy: "\n\n")
-            .map {
-                $0.components(separatedBy: .newlines)
-                    .compactMap {
-                        Int($0)
-                    }
-                    .sum()
-            }
+        sumEachParagraph(input: input)
             .max()
     }
 
     func solve2(input: String) -> Int {
-        return input
-            .components(separatedBy: "\n\n")
-            .map {
-                $0.components(separatedBy: .newlines)
-                    .compactMap {
-                        Int($0)
-                    }
-                    .sum()
-            }
+        sumEachParagraph(input: input)
             .top(3)
             .sum()
+    }
+
+    private func sumEachParagraph(input: String) -> [Int] {
+        input
+            .splitParagraphs()
+            .map {
+                $0.integerList().sum()
+            }
     }
 }

@@ -32,3 +32,16 @@ func fetchSampleData(filename: String) throws -> String {
     let fileContent = try String(contentsOfFile: input)
     return fileContent
 }
+
+extension String {
+    func splitParagraphs() -> [String] {
+        components(separatedBy: "\n\n")
+    }
+    func splitLines() -> [String] {
+        components(separatedBy: .newlines)
+    }
+    func integerList() -> [Int] {
+        splitLines()
+            .compactMap(Int.init)
+    }
+}
