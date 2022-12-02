@@ -42,7 +42,8 @@ func fetchSampleData(filename: String) throws -> String {
 
 extension String {
     func splitParagraphs() -> [String] {
-        components(separatedBy: "\n\n")
+        trimmingCharacters(in: .whitespacesAndNewlines)
+            .components(separatedBy: "\n\n")
     }
 
     func splitLines() -> [String] {
@@ -50,8 +51,12 @@ extension String {
             .components(separatedBy: .newlines)
     }
 
-    func splitList() -> [String] {
-        components(separatedBy: .whitespaces)
+    func splitList(separator: String = " ") -> [String] {
+        trimmingCharacters(in: .whitespacesAndNewlines)
+            .components(separatedBy: separator)
+            .map {
+                $0.trimmingCharacters(in: .whitespaces)
+            }
     }
 
     func integerList() -> [Int] {
