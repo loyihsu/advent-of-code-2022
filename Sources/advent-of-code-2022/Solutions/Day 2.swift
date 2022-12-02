@@ -6,24 +6,19 @@
 //
 
 class Day2 {
-    enum Move {
-        case rock
-        case paper
-        case scissors
+    enum Move: Int, Equatable {
+        case rock = 1
+        case paper = 2
+        case scissors = 3
 
-        var score: Int {
-            switch self {
-            case .rock:
-                return 1
-            case .paper:
-                return 2
-            case .scissors:
-                return 3
-            }
-        }
-
-        static func getMyMove(symbol: String) -> Move? {
+        static func getMove(symbol: String) -> Move? {
             switch symbol {
+            case "A":
+                return .rock
+            case "B":
+                return .paper
+            case "C":
+                return .scissors
             case "X":
                 return .rock
             case "Y":
@@ -34,36 +29,12 @@ class Day2 {
                 return nil
             }
         }
-
-        static func getOtherMove(symbol: String) -> Move? {
-            switch symbol {
-            case "A":
-                return .rock
-            case "B":
-                return .paper
-            case "C":
-                return .scissors
-            default:
-                return nil
-            }
-        }
     }
 
-    enum State {
-        case win
-        case draw
-        case lose
-
-        var score: Int {
-            switch self {
-            case .win:
-                return 6
-            case .draw:
-                return 3
-            case .lose:
-                return 0
-            }
-        }
+    enum State: Int {
+        case win = 6
+        case draw = 3
+        case lose = 0
 
         static func getWinState(from string: String) -> State? {
             switch string {
@@ -79,67 +50,14 @@ class Day2 {
         }
     }
 
-    private func compare(myMove: Move, otherMove: Move) -> State {
-        switch myMove {
-        case .paper:
-            switch otherMove {
-            case .paper:
-                return .draw
-            case .rock:
-                return .win
-            case .scissors:
-                return .lose
-            }
-        case .scissors:
-            switch otherMove {
-            case .paper:
-                return .win
-            case .rock:
-                return .lose
-            case .scissors:
-                return .draw
-            }
-        case .rock:
-            switch otherMove {
-            case .paper:
-                return .lose
-            case .rock:
-                return .draw
-            case .scissors:
-                return .win
-            }
-        }
-    }
-
     func getMyMove(winState: State, otherMove: Move) -> Move {
         switch winState {
         case .win:
-            switch otherMove {
-            case .paper:
-                return .scissors
-            case .rock:
-                return .paper
-            case .scissors:
-                return .rock
-            }
+            return getOtherMoveForLose(this: otherMove)
         case .draw:
-            switch otherMove {
-            case .paper:
-                return .paper
-            case .rock:
-                return .rock
-            case .scissors:
-                return .scissors
-            }
+            return otherMove
         case .lose:
-            switch otherMove {
-            case .paper:
-                return .rock
-            case .rock:
-                return .scissors
-            case .scissors:
-                return .paper
-            }
+            return getOtherMoveForWin(this: otherMove)
         }
     }
 
@@ -148,10 +66,10 @@ class Day2 {
             .splitLines()
             .map {
                 let elements = $0.splitList()
-                let otherMove = Move.getOtherMove(symbol: elements[0])!
-                let myMove = Move.getMyMove(symbol: elements[1])!
-                let state = compare(myMove: myMove, otherMove: otherMove)
-                return myMove.score + state.score
+                let otherMove = Move.getMove(symbol: elements[0])!
+                let myMove = Move.getMove(symbol: elements[1])!
+                let state = decideWin(this: myMove, that: otherMove)
+                return myMove.rawValue + state.rawValue
             }
             .sum()
     }
@@ -161,11 +79,38 @@ class Day2 {
             .splitLines()
             .map {
                 let elements = $0.splitList()
-                let otherMove = Move.getOtherMove(symbol: elements[0])!
+                let otherMove = Move.getMove(symbol: elements[0])!
                 let winState = State.getWinState(from: elements[1])!
                 let myMove = getMyMove(winState: winState, otherMove: otherMove)
-                return myMove.score + winState.score
+                return myMove.rawValue + winState.rawValue
             }
             .sum()
+    }
+
+    private func decideWin(this: Move, that: Move) -> State {
+        guard this != that else { return .draw }
+        return that == getOtherMoveForWin(this: this) ? .win : .lose
+    }
+
+    private func getOtherMoveForWin(this: Move) -> Move {
+        switch this {
+        case .scissors:
+            return .paper
+        case .rock:
+            return .scissors
+        case .paper:
+            return .rock
+        }
+    }
+
+    private func getOtherMoveForLose(this: Move) -> Move {
+        switch this {
+        case .scissors:
+            return .rock
+        case .rock:
+            return .paper
+        case .paper:
+            return .scissors
+        }
     }
 }
