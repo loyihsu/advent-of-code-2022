@@ -37,13 +37,16 @@ extension String {
     func splitParagraphs() -> [String] {
         components(separatedBy: "\n\n")
     }
+
     func splitLines() -> [String] {
         trimmingCharacters(in: .newlines)
             .components(separatedBy: .newlines)
     }
+
     func splitList() -> [String] {
         components(separatedBy: .whitespaces)
     }
+
     func integerList() -> [Int] {
         splitLines()
             .compactMap(Int.init)

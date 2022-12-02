@@ -11,13 +11,13 @@ final class advent_of_code_2022Tests: XCTestCase {
         let solver = Day1()
 
         let sampleAnswer1 = try XCTUnwrap(solver.solve1(input: sampleInput))
-        XCTAssertEqual(sampleAnswer1, 24_000)
+        XCTAssertEqual(sampleAnswer1, 24000)
 
         let sampleAnswer2 = try XCTUnwrap(solver.solve2(input: sampleInput))
-        XCTAssertEqual(sampleAnswer2, 45_000)
+        XCTAssertEqual(sampleAnswer2, 45000)
 
         let realAnswer1 = try XCTUnwrap(solver.solve1(input: realInput))
-        XCTAssertEqual(realAnswer1, 67_633)
+        XCTAssertEqual(realAnswer1, 67633)
 
         let realAnswer2 = solver.solve2(input: realInput)
         XCTAssertEqual(realAnswer2, 199_628)
@@ -38,10 +38,9 @@ final class advent_of_code_2022Tests: XCTestCase {
         XCTAssertEqual(sampleAnswer2, 12)
 
         let realAnswer1 = try XCTUnwrap(solver.solve1(input: realInput))
-        XCTAssertEqual(realAnswer1, 13_268)
+        XCTAssertEqual(realAnswer1, 13268)
 
         let realAnswer2 = solver.solve2(input: realInput)
-        XCTAssertEqual(realAnswer2, 15_508)
+        XCTAssertEqual(realAnswer2, 15508)
     }
-
 }
