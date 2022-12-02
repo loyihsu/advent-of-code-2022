@@ -24,7 +24,7 @@ let package = Package(
             name: "advent-of-code-2022Tests",
             dependencies: ["advent-of-code-2022"],
             resources: [
-                .copy("Testcases"),
+                .copy("Daily Tests"),
             ]
         ),
     ]

@@ -1,3 +1,9 @@
+//
+//  main.swift
+//
+//
+//  Created by Loyi Hsu on 2022/12/1.
+//
 
 let sample = try! fetchSampleData(filename: "Inputs/Sample")
 let input = try! fetchSampleData(filename: "Inputs/Input")

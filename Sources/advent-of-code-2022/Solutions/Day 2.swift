@@ -1,5 +1,5 @@
 //
-//  Day2.swift
+//  Day 2.swift
 //
 //
 //  Created by Loyi Hsu on 2022/12/2.
