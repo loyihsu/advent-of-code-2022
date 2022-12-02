@@ -38,7 +38,11 @@ extension String {
         components(separatedBy: "\n\n")
     }
     func splitLines() -> [String] {
-        components(separatedBy: .newlines)
+        trimmingCharacters(in: .newlines)
+            .components(separatedBy: .newlines)
+    }
+    func splitList() -> [String] {
+        components(separatedBy: .whitespaces)
     }
     func integerList() -> [Int] {
         splitLines()
