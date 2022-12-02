@@ -1,6 +1,6 @@
 //
 //  Day2.swift
-//  
+//
 //
 //  Created by Loyi Hsu on 2022/12/2.
 //
@@ -66,14 +66,16 @@ class Day2 {
         }
 
         static func getWinState(from string: String) -> State? {
-            if string == "X" {
+            switch string {
+            case "X":
                 return .lose
-            } else if string == "Y" {
+            case "Y":
                 return .draw
-            } else if string == "Z" {
+            case "Z":
                 return .win
+            default:
+                return nil
             }
-            return nil
         }
     }
 
