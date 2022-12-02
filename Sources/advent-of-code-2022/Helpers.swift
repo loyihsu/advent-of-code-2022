@@ -28,7 +28,7 @@ extension Array where Element == Int {
 }
 
 func fetchSampleData(filename: String) throws -> String {
-    let input = Bundle.module.path(forResource: "\(filename)", ofType: "io")!
+    let input = Bundle.module.path(forResource: "\(filename)", ofType: "txt")!
     let fileContent = try String(contentsOfFile: input)
     return fileContent
 }
