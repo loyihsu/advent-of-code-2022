@@ -1,5 +1,5 @@
 //
-//  Day3.swift
+//  Day 3.swift
 //
 //
 //  Created by Loyi Hsu on 2022/12/2.
@@ -13,12 +13,12 @@ class Day3 {
         }
 
     func solve1(input: String) -> Int {
-        return input
+        input
             .splitLines()
             .map(Array.init)
             .map(splitCompartments(line:))
-            .compactMap { (this, that) in
-                return this.findFirstCommonCharacter(in: that)
+            .compactMap { this, that in
+                this.findFirstCommonCharacter(in: that)
             }
             .compactMap {
                 allCharacters[$0]
@@ -27,14 +27,13 @@ class Day3 {
     }
 
     func solve2(input: String) -> Int {
-        return input
+        input
             .splitLines()
             .map(Array.init)
             .chunked(3)
             .compactMap {
                 let first = $0[0].findCommonCharacters(in: $0[1])
                 let second = $0[1].findCommonCharacters(in: $0[2])
-
                 return first.findFirstCommonCharacter(in: second)
             }
             .compactMap {
@@ -43,10 +42,10 @@ class Day3 {
             .sum()
     }
 
-    private func splitCompartments(line: Array<Character>) -> (Array<Character>, Array<Character>) {
+    private func splitCompartments(line: [Character]) -> ([Character], [Character]) {
         let half = line.count / 2
         let startIndex = line.startIndex
         let halfIndex = line.index(startIndex, offsetBy: half)
-        return (Array(line[startIndex..<halfIndex]), Array(line[halfIndex...]))
+        return (Array(line[startIndex ..< halfIndex]), Array(line[halfIndex...]))
     }
 }

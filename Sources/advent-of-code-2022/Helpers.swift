@@ -35,7 +35,6 @@ extension Array {
     }
 }
 
-
 extension Array where Element == Int {
     func sum() -> Int {
         reduce(0, +)
