@@ -18,7 +18,7 @@ class Day3 {
             .map(Array.init)
             .map(splitCompartments(line:))
             .compactMap { this, that in
-                this.findFirstCommonCharacter(in: that)
+                this.findOneAndOnlyCommonCharacter(in: that)
             }
             .compactMap {
                 allCharacters[$0]
@@ -34,7 +34,7 @@ class Day3 {
             .compactMap {
                 let first = $0[0].findCommonCharacters(in: $0[1])
                 let second = $0[1].findCommonCharacters(in: $0[2])
-                return first.findFirstCommonCharacter(in: second)
+                return first.findOneAndOnlyCommonCharacter(in: second)
             }
             .compactMap {
                 allCharacters[$0]

@@ -87,17 +87,16 @@ extension String {
             }
     }
 
-    func integerList() -> [Int] {
+    func integerListByLine() -> [Int] {
         splitLines()
             .compactMap(Int.init)
     }
 }
 
 extension Array where Element == Character {
-    func findFirstCommonCharacter(in another: [Character]) -> Character? {
-        let this = Set(self)
-        let that = Set(another)
-        return this.first(where: { that.contains($0) })
+    func findOneAndOnlyCommonCharacter(in another: [Character]) -> Character? {
+        let found = Set(findCommonCharacters(in: another))
+        return found.count == 1 ? found.first : nil
     }
 
     func findCommonCharacters(in another: [Character]) -> [Character] {

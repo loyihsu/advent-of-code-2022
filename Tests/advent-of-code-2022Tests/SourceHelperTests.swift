@@ -22,6 +22,18 @@ final class SourceHelperTests: XCTestCase {
         XCTAssertTrue(top3.contains(5))
     }
 
+    func test_top_negative() {
+        let array = [1, 2, 3, 4, 5]
+        let top = array.top(-1)
+        XCTAssertTrue(top.isEmpty)
+    }
+
+    func test_top_emptyArray() {
+        let array = [Int]()
+        let top = array.top(3)
+        XCTAssertTrue(top.isEmpty)
+    }
+
     func test_top_over() {
         let array = [1, 2, 3]
         let top5 = array.top(5)
@@ -111,5 +123,68 @@ final class SourceHelperTests: XCTestCase {
         XCTAssertTrue(items.contains("D"))
         XCTAssertTrue(items.contains("E"))
         XCTAssertTrue(items.contains("F"))
+    }
+
+    func test_integerList() {
+        let text = """
+        1
+        2
+        3
+        4
+        5
+        6
+        7
+        8
+        9
+        10
+
+        """
+        let list = text.integerListByLine()
+        XCTAssertEqual(list, Array(1 ... 10))
+    }
+
+    func test_chunked_withoutRemainder() {
+        let array = Array(1 ... 8).chunked(4)
+        XCTAssertEqual(array, [[1, 2, 3, 4], [5, 6, 7, 8]])
+    }
+
+    func test_chunked_withRemainder() {
+        let array = Array(1 ... 10).chunked(3)
+        XCTAssertEqual(array, [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10]])
+    }
+
+    func test_oneAndOnlyCommonCharacters() {
+        let first = Array("abcde")
+        let second = Array("efghijk")
+        let firstCommonCharacter = first.findOneAndOnlyCommonCharacter(in: second)
+        XCTAssertEqual(firstCommonCharacter, "e")
+    }
+
+    func test_oneAndOnlyCommonCharacters_notOneAndOnly() {
+        let first = Array("abcdef")
+        let second = Array("efghijk")
+        let firstCommonCharacter = first.findOneAndOnlyCommonCharacter(in: second)
+        XCTAssertNil(firstCommonCharacter)
+    }
+
+    func test_firstCommonCharacters_withDupes() {
+        let first = Array("abcdeeeeee")
+        let second = Array("feghijk")
+        let firstCommonCharacter = first.findOneAndOnlyCommonCharacter(in: second)
+        XCTAssertEqual(firstCommonCharacter, "e")
+    }
+
+    func test_findALlCommonCharacters() {
+        let first = Array("abcdeefghi")
+        let second = Array("bcdefgk")
+        let filtered = first.findCommonCharacters(in: second)
+        XCTAssertFalse(filtered.contains("a"))
+        XCTAssertTrue(filtered.contains("b"))
+        XCTAssertTrue(filtered.contains("c"))
+        XCTAssertTrue(filtered.contains("d"))
+        XCTAssertTrue(filtered.contains("e"))
+        XCTAssertTrue(filtered.contains("f"))
+        XCTAssertTrue(filtered.contains("g"))
+        XCTAssertFalse(filtered.contains("k"))
     }
 }
