@@ -18,7 +18,7 @@ class Day3 {
             .map(Array.init)
             .map(splitCompartments(line:))
             .compactMap { this, that in
-                this.findOneAndOnlyCommonCharacter(in: that)
+                this.findOneAndOnlyCommonCharacter(in: that, duplicationHandlingStrategy: .duplicatesConsideredSame)
             }
             .compactMap {
                 allCharacters[$0]
@@ -32,9 +32,9 @@ class Day3 {
             .map(Array.init)
             .chunked(3)
             .compactMap {
-                let first = $0[0].findCommonCharacters(in: $0[1])
-                let second = $0[1].findCommonCharacters(in: $0[2])
-                return first.findOneAndOnlyCommonCharacter(in: second)
+                let first = $0[0].findCommonCharacters(in: $0[1], duplicationHandlingStrategy: .duplicatesConsideredSame)
+                let second = $0[1].findCommonCharacters(in: $0[2], duplicationHandlingStrategy: .duplicatesConsideredSame)
+                return first.findOneAndOnlyCommonCharacter(in: second, duplicationHandlingStrategy: .duplicatesConsideredSame)
             }
             .compactMap {
                 allCharacters[$0]

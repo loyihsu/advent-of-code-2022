@@ -156,30 +156,30 @@ final class SourceHelperTests: XCTestCase {
     func test_oneAndOnlyCommonCharacters() {
         let first = Array("abcde")
         let second = Array("efghijk")
-        let firstCommonCharacter = first.findOneAndOnlyCommonCharacter(in: second)
+        let firstCommonCharacter = first.findOneAndOnlyCommonCharacter(in: second, duplicationHandlingStrategy: .duplicatesConsideredDifferent)
         XCTAssertEqual(firstCommonCharacter, "e")
     }
 
     func test_oneAndOnlyCommonCharacters_notOneAndOnly() {
         let first = Array("abcdef")
         let second = Array("efghijk")
-        let firstCommonCharacter = first.findOneAndOnlyCommonCharacter(in: second)
+        let firstCommonCharacter = first.findOneAndOnlyCommonCharacter(in: second, duplicationHandlingStrategy: .duplicatesConsideredDifferent)
         XCTAssertNil(firstCommonCharacter)
     }
 
     func test_firstCommonCharacters_withDupes() {
         let first = Array("abcdeeeeee")
         let second = Array("feghijk")
-        let firstCommonCharacterCanDupe = first.findOneAndOnlyCommonCharacter(in: second, duplicationHandlingStrategy: .duplicationConsideredSameCharacter)
+        let firstCommonCharacterCanDupe = first.findOneAndOnlyCommonCharacter(in: second, duplicationHandlingStrategy: .duplicatesConsideredSame)
         XCTAssertEqual(firstCommonCharacterCanDupe, "e")
-        let firstCommonCharacterCannotDupe = first.findOneAndOnlyCommonCharacter(in: second, duplicationHandlingStrategy: .duplicationConsideredDifferentCharacters)
+        let firstCommonCharacterCannotDupe = first.findOneAndOnlyCommonCharacter(in: second, duplicationHandlingStrategy: .duplicatesConsideredDifferent)
         XCTAssertEqual(firstCommonCharacterCannotDupe, nil)
     }
 
-    func test_findALlCommonCharacters() {
+    func test_findAllCommonCharacters() {
         let first = Array("abcdeefghi")
         let second = Array("bcdefgk")
-        let filtered = first.findCommonCharacters(in: second)
+        let filtered = first.findCommonCharacters(in: second, duplicationHandlingStrategy: .duplicatesConsideredDifferent)
         XCTAssertFalse(filtered.contains("a"))
         XCTAssertTrue(filtered.contains("b"))
         XCTAssertTrue(filtered.contains("c"))

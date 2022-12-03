@@ -95,28 +95,28 @@ extension String {
 
 extension Array where Element == Character {
     enum DuplicationHandlingStrategy {
-        case duplicationConsideredSameCharacter
-        case duplicationConsideredDifferentCharacters
+        case duplicatesConsideredSame
+        case duplicatesConsideredDifferent
     }
 
-    func findOneAndOnlyCommonCharacter(in another: [Character], duplicationHandlingStrategy: DuplicationHandlingStrategy = .duplicationConsideredSameCharacter) -> Character? {
+    func findOneAndOnlyCommonCharacter(in another: [Character], duplicationHandlingStrategy: DuplicationHandlingStrategy) -> Character? {
         let found = findCommonCharacters(in: another, duplicationHandlingStrategy: duplicationHandlingStrategy)
         switch duplicationHandlingStrategy {
-        case .duplicationConsideredSameCharacter:
+        case .duplicatesConsideredSame:
             let set = Set(found)
             return set.count == 1 ? set.first : nil
-        case .duplicationConsideredDifferentCharacters:
+        case .duplicatesConsideredDifferent:
             return found.count == 1 ? found.first : nil
         }
     }
 
-    func findCommonCharacters(in another: [Character], duplicationHandlingStrategy: DuplicationHandlingStrategy = .duplicationConsideredSameCharacter) -> [Character] {
+    func findCommonCharacters(in another: [Character], duplicationHandlingStrategy: DuplicationHandlingStrategy) -> [Character] {
         switch duplicationHandlingStrategy {
-        case .duplicationConsideredSameCharacter:
+        case .duplicatesConsideredSame:
             let this = Set(self)
             let that = Set(another)
             return this.filter { that.contains($0) }
-        case .duplicationConsideredDifferentCharacters:
+        case .duplicatesConsideredDifferent:
             return filter { another.contains($0) }
         }
     }
