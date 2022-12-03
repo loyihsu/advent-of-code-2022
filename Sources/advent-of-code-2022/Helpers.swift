@@ -7,6 +7,35 @@
 
 import Foundation
 
+extension Array {
+    func chunked(_ count: Int) -> [[Element]] {
+        var copySelf = self
+        var temp = [Element]()
+        var output = [[Element]]()
+
+        while let item = copySelf.popFirst() {
+            temp.append(item)
+
+            if temp.count == count {
+                output.append(temp)
+                temp = []
+            }
+        }
+
+        if !temp.isEmpty {
+            output.append(temp)
+        }
+
+        return output
+    }
+
+    mutating func popFirst() -> Element? {
+        guard !isEmpty else { return nil }
+        return removeFirst()
+    }
+}
+
+
 extension Array where Element == Int {
     func sum() -> Int {
         reduce(0, +)
@@ -62,5 +91,19 @@ extension String {
     func integerList() -> [Int] {
         splitLines()
             .compactMap(Int.init)
+    }
+}
+
+extension Array where Element == Character {
+    func findFirstCommonCharacter(in another: [Character]) -> Character? {
+        let this = Set(self)
+        let that = Set(another)
+        return this.first(where: { that.contains($0) })
+    }
+
+    func findCommonCharacters(in another: [Character]) -> [Character] {
+        let this = Set(self)
+        let that = Set(another)
+        return this.filter { that.contains($0) }
     }
 }
