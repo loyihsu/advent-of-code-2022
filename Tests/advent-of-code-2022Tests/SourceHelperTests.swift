@@ -170,8 +170,10 @@ final class SourceHelperTests: XCTestCase {
     func test_firstCommonCharacters_withDupes() {
         let first = Array("abcdeeeeee")
         let second = Array("feghijk")
-        let firstCommonCharacter = first.findOneAndOnlyCommonCharacter(in: second)
-        XCTAssertEqual(firstCommonCharacter, "e")
+        let firstCommonCharacterCanDupe = first.findOneAndOnlyCommonCharacter(in: second, duplicationHandlingStrategy: .duplicationConsideredSameCharacter)
+        XCTAssertEqual(firstCommonCharacterCanDupe, "e")
+        let firstCommonCharacterCannotDupe = first.findOneAndOnlyCommonCharacter(in: second, duplicationHandlingStrategy: .duplicationConsideredDifferentCharacters)
+        XCTAssertEqual(firstCommonCharacterCannotDupe, nil)
     }
 
     func test_findALlCommonCharacters() {
