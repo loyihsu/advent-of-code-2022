@@ -21,7 +21,7 @@ class Day1 {
         input
             .splitParagraphs()
             .map {
-                $0.integerListByLine().sum()
+                $0.integerList(separator: "\n").sum()
             }
     }
 }

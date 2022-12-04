@@ -126,6 +126,12 @@ final class SourceHelperTests: XCTestCase {
     }
 
     func test_integerList() {
+        let text = "1 2 3 4 5"
+        let list = text.integerList()
+        XCTAssertEqual(list, Array(1 ... 5))
+    }
+
+    func test_integerList_byNewline() {
         let text = """
         1
         2
@@ -139,7 +145,7 @@ final class SourceHelperTests: XCTestCase {
         10
 
         """
-        let list = text.integerListByLine()
+        let list = text.integerList(separator: "\n")
         XCTAssertEqual(list, Array(1 ... 10))
     }
 

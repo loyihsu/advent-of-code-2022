@@ -87,8 +87,9 @@ extension String {
             }
     }
 
-    func integerListByLine() -> [Int] {
-        splitLines()
+    func integerList(separator: String = " ") -> [Int] {
+        trimmingCharacters(in: .whitespacesAndNewlines)
+            .components(separatedBy: separator)
             .compactMap(Int.init)
     }
 }
