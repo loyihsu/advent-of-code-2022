@@ -8,9 +8,7 @@
 class Day4 {
     func solve1(input: String) -> Int {
         handleInputs(input: input) { first, second in
-            let bigger = first.count > second.count ? first : second
-            let smaller = bigger == first ? second : first
-            return smaller.allSatisfy { bigger.contains($0) }
+            first.contains(second) || second.contains(first)
         }
     }
 

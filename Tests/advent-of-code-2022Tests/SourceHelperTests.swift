@@ -195,4 +195,32 @@ final class SourceHelperTests: XCTestCase {
         XCTAssertTrue(filtered.contains("g"))
         XCTAssertFalse(filtered.contains("k"))
     }
+
+    func test_contains_closedRangeCorrect() {
+        let first = 1 ... 10
+        let second = 1 ... 5
+        XCTAssertTrue(first.contains(second))
+        XCTAssertFalse(second.contains(first))
+    }
+
+    func test_contains_closedRangeIncorrect() {
+        let first = 1 ... 10
+        let second = 0 ... 5
+        XCTAssertFalse(first.contains(second))
+        XCTAssertFalse(second.contains(first))
+    }
+
+    func test_contains_arrayCorrect() {
+        let first = [1, 2, 3, 4, 5]
+        let second = [2, 4, 5]
+        XCTAssertTrue(first.contains(second))
+        XCTAssertFalse(second.contains(first))
+    }
+
+    func test_contains_arrayIncorrect() {
+        let first = [1, 2, 3, 5]
+        let second = [2, 4, 5]
+        XCTAssertFalse(first.contains(second))
+        XCTAssertFalse(second.contains(first))
+    }
 }

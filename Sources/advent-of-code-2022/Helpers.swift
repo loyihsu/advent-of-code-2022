@@ -122,3 +122,9 @@ extension Array where Element == Character {
         }
     }
 }
+
+extension Sequence where Element: Equatable {
+    func contains<Another: Sequence<Element>>(_ another: Another) -> Bool {
+        another.allSatisfy(contains)
+    }
+}
