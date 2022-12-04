@@ -1,11 +1,11 @@
 //
-//  Day 8.swift
+//  Day 07.swift
 //
 //
 //  Created by Yu-Sung Loyi Hsu on 2022/12/4.
 //
 
-class Day8 {
+class Day7 {
     func solve1(input _: String) -> Int {
         0
     }

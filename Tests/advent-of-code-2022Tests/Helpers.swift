@@ -8,6 +8,7 @@
 import Foundation
 
 func fetchSampleData(day: Int, filename: String) throws -> String {
+    let day = String(format: "%02d", day)
     let input = Bundle.module.path(
         forResource: "Daily Tests/Day \(day)/\(filename)",
         ofType: "txt"
