@@ -19,7 +19,7 @@ class Day1 {
 
     private func sumEachParagraph(input: String) -> [Int] {
         input
-            .splitParagraphs()
+            .splitParagraphs(shouldTrimWhitespacesAndNewlines: true)
             .map {
                 $0.integerList(separator: "\n").sum()
             }

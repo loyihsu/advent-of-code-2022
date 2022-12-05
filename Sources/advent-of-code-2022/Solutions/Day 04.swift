@@ -20,9 +20,9 @@ class Day4 {
 
     private func handleInputs(input: String, _ compare: @escaping (ClosedRange<Int>, ClosedRange<Int>) -> Bool) -> Int {
         input
-            .splitLines()
+            .splitLines(shouldTrimWhitespacesAndNewlines: true)
             .map {
-                $0.splitList(separator: ",")
+                $0.splitList(separator: ",", shouldTrimWhitespacesAndNewlines: true)
             }
             .filter {
                 guard let first = makeClosedRange($0[0]),

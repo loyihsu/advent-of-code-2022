@@ -70,9 +70,9 @@ class Day2 {
 
     private func computeRaces(input: String, getMyMoveAndWinState: ([String]) -> (Move, State)) -> Int {
         input
-            .splitLines()
+            .splitLines(shouldTrimWhitespacesAndNewlines: true)
             .map {
-                let elements = $0.splitList()
+                let elements = $0.splitList(shouldTrimWhitespacesAndNewlines: true)
                 let (myMove, winState) = getMyMoveAndWinState(elements)
                 return myMove.rawValue + winState.rawValue
             }

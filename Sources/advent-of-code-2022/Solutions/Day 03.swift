@@ -14,7 +14,7 @@ class Day3 {
 
     func solve1(input: String) -> Int {
         input
-            .splitLines()
+            .splitLines(shouldTrimWhitespacesAndNewlines: true)
             .map(Array.init)
             .map(splitCompartments(line:))
             .compactMap { this, that in
@@ -28,7 +28,7 @@ class Day3 {
 
     func solve2(input: String) -> Int {
         input
-            .splitLines()
+            .splitLines(shouldTrimWhitespacesAndNewlines: true)
             .map(Array.init)
             .chunked(3)
             .compactMap {

@@ -69,18 +69,25 @@ func fetchSampleData(filename: String) throws -> String {
 }
 
 extension String {
-    func splitParagraphs() -> [String] {
-        trimmingCharacters(in: .whitespacesAndNewlines)
-            .components(separatedBy: "\n\n")
+    func splitParagraphs(shouldTrimWhitespacesAndNewlines: Bool) -> [String] {
+        let copySelf = shouldTrimWhitespacesAndNewlines
+            ? trimmingCharacters(in: .whitespacesAndNewlines)
+            : self
+        return copySelf.components(separatedBy: "\n\n")
     }
 
-    func splitLines() -> [String] {
-        trimmingCharacters(in: .newlines)
-            .components(separatedBy: .newlines)
+    func splitLines(shouldTrimWhitespacesAndNewlines: Bool) -> [String] {
+        let copySelf = shouldTrimWhitespacesAndNewlines
+            ? trimmingCharacters(in: .whitespacesAndNewlines)
+            : self
+        return copySelf.components(separatedBy: .newlines)
     }
 
-    func splitList(separator: String = " ") -> [String] {
-        trimmingCharacters(in: .whitespacesAndNewlines)
+    func splitList(separator: String = " ", shouldTrimWhitespacesAndNewlines: Bool) -> [String] {
+        let copySelf = shouldTrimWhitespacesAndNewlines
+            ? trimmingCharacters(in: .whitespacesAndNewlines)
+            : self
+        return copySelf
             .components(separatedBy: separator)
             .map {
                 $0.trimmingCharacters(in: .whitespaces)

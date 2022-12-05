@@ -56,7 +56,7 @@ final class SourceHelperTests: XCTestCase {
         C
 
         """
-        let items = text.splitParagraphs()
+        let items = text.splitParagraphs(shouldTrimWhitespacesAndNewlines: true)
         XCTAssertTrue(items.contains("A"))
         XCTAssertTrue(items.contains("B"))
         XCTAssertTrue(items.contains("C"))
@@ -72,7 +72,7 @@ final class SourceHelperTests: XCTestCase {
 
         """
 
-        let items = text.splitLines()
+        let items = text.splitLines(shouldTrimWhitespacesAndNewlines: true)
         XCTAssertTrue(items.contains("A"))
         XCTAssertTrue(items.contains("B"))
         XCTAssertTrue(items.contains("C"))
@@ -86,7 +86,7 @@ final class SourceHelperTests: XCTestCase {
 
         """
 
-        let items = text.splitList()
+        let items = text.splitList(shouldTrimWhitespacesAndNewlines: true)
         XCTAssertTrue(items.contains("A"))
         XCTAssertTrue(items.contains("B"))
         XCTAssertTrue(items.contains("C"))
@@ -101,7 +101,7 @@ final class SourceHelperTests: XCTestCase {
 
         """
 
-        let items = text.splitList(separator: ",")
+        let items = text.splitList(separator: ",", shouldTrimWhitespacesAndNewlines: true)
         XCTAssertTrue(items.contains("A"))
         XCTAssertTrue(items.contains("B"))
         XCTAssertTrue(items.contains("C"))
@@ -116,7 +116,7 @@ final class SourceHelperTests: XCTestCase {
 
         """
 
-        let items = text.splitList(separator: ",")
+        let items = text.splitList(separator: ",", shouldTrimWhitespacesAndNewlines: true)
         XCTAssertTrue(items.contains("A"))
         XCTAssertTrue(items.contains("B"))
         XCTAssertTrue(items.contains("C"))
