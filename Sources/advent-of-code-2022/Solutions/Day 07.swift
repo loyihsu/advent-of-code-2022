@@ -38,7 +38,7 @@ class Day7 {
     private func parseFileSystem(input: String) -> Entry {
         let lines = input.splitLines(shouldTrimWhitespacesAndNewlines: true)
         var structure: [String] = []
-        let fileSystem = Entry.makeDirectory(name: "/", substructure: [])
+        let fileSystem = Directory(name: "/", sub: [])
 
         lines
             .forEach { line in
@@ -71,9 +71,9 @@ class Day7 {
     private func makeEntry(string: String) -> Entry {
         let tokens = string.components(separatedBy: .whitespaces)
         if tokens[0] == "dir" {
-            return Entry.makeDirectory(name: tokens[1], substructure: [])
+            return Directory(name: tokens[1], sub: [])
         } else {
-            return Entry.makeFile(name: tokens[1], size: Int(tokens[0])!)
+            return File(name: tokens[1], size: Int(tokens[0])!)
         }
     }
 }
@@ -98,50 +98,39 @@ enum Command {
     }
 }
 
-class Entry {
-    enum EntryType: Equatable {
-        case directory
-        case file(size: Int)
-    }
+protocol Entry: AnyObject {
+    var name: String { get }
+    var size: Int { get }
+    func insertOrUpdate(_ entry: Entry, structure: [String])
+}
 
+extension Entry {
+    func insertOrUpdate(_: Entry, structure _: [String]) {}
+
+    func findAllDirectories() -> [(String, Int)] {
+        var output = [(String, Int)]()
+        guard let entry = self as? Directory else { return output }
+        output.append((entry.name, entry.size))
+        for item in entry.sub {
+            output.append(contentsOf: item.findAllDirectories())
+        }
+        return output
+    }
+}
+
+class Directory: Entry {
     let name: String
-    let type: EntryType
-    var substructure: [Entry]?
-
-    private init(name: String, type: EntryType, substructure: [Entry]?) {
-        self.name = name
-        self.type = type
-        self.substructure = substructure
-    }
-
-    static func makeDirectory(name: String, substructure: [Entry]) -> Entry {
-        Entry(
-            name: name,
-            type: .directory,
-            substructure: substructure
-        )
-    }
-
-    static func makeFile(
-        name: String,
-        size: Int
-    ) -> Entry {
-        Entry(
-            name: name,
-            type: .file(size: size),
-            substructure: nil
-        )
-    }
+    var sub: [Entry]
 
     var size: Int {
-        switch type {
-        case .directory:
-            return substructure!
-                .map(\.size)
-                .reduce(0, +)
-        case let .file(size):
-            return size
-        }
+        sub
+            .map(\.size)
+            .sum()
+    }
+
+    init(name: String, sub: [Entry]) {
+        self.name = name
+        self.sub = sub
     }
 
     func insertOrUpdate(_ entry: Entry, structure: [String]) {
@@ -149,29 +138,23 @@ class Entry {
         var current = self
 
         while let first = structure.popFirst() {
-            switch current.type {
-            case .directory:
-                if let found = current.substructure?.first(where: { $0.name == first }) {
-                    current = found
-                }
+            if let found = current.sub.first(where: { $0.name == first }) as? Directory {
+                current = found
+            }
 
-                if structure.isEmpty {
-                    current.substructure?.append(entry)
-                }
-            case .file:
-                fatalError("This is a file")
+            if structure.isEmpty {
+                current.sub.append(entry)
             }
         }
     }
+}
 
-    func findAllDirectories() -> [(String, Int)] {
-        var output = [(String, Int)]()
-        if type == .directory {
-            output.append((name, size))
-        }
-        for item in substructure ?? [] {
-            output.append(contentsOf: item.findAllDirectories())
-        }
-        return output
+class File: Entry {
+    let name: String
+    let size: Int
+
+    init(name: String, size: Int) {
+        self.name = name
+        self.size = size
     }
 }
