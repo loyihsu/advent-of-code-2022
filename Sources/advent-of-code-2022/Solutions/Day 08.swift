@@ -32,7 +32,7 @@ class Day8 {
         let tallest = Direction.allCases
             .map { direction in
                 direction.getRange(idx: idx, jdx: jdx, length: (first: list.count, second: list[idx].count))
-                    .map { ndx in
+                    .map { ndx -> Int in
                         let adx = direction.navigationMode == .horizontal ? idx : ndx
                         let bdx = direction.navigationMode == .horizontal ? ndx : jdx
                         return list[adx][bdx]
