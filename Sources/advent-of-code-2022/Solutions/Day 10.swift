@@ -57,8 +57,8 @@ class Day10 {
                 }
                 return nil
             }
-            .forEach {
-                $0.exec(register: &register, cycles: &cycle)
+            .forEach { (command: Command) in
+                command.exec(register: &register, cycles: &cycle)
                 while output.count <= cycle, let log = output.last {
                     output.append(log)
                 }
