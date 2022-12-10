@@ -16,70 +16,43 @@ struct Position: Hashable {
         let yDistance = Double(y - another.y)
         return Int(sqrt(xDistance * xDistance + yDistance * yDistance))
     }
+
+    mutating func moveIfNeeded(follow another: Position) {
+        guard distance(from: another) > 1 else { return }
+        if x == another.x {
+            if y > another.y {
+                y -= 1
+            } else if y < another.y {
+                y += 1
+            }
+        } else if y == another.y {
+            if x > another.x {
+                x -= 1
+            } else if x < another.x {
+                x += 1
+            }
+        } else {
+            if x > another.x {
+                x -= 1
+            } else if x < another.x {
+                x += 1
+            }
+            if y > another.y {
+                y -= 1
+            } else if y < another.y {
+                y += 1
+            }
+        }
+    }
 }
 
 class Day9 {
     func solve1(input: String) -> Int {
-        var headPosition = Position()
-        var lastHeadPosition = Position()
-        var tailPosition = Position()
-        var tailBook = Set<Position>([tailPosition])
-
-        input
-            .splitLines(shouldTrimWhitespacesAndNewlines: true)
-            .map {
-                $0.components(separatedBy: .whitespaces)
-            }
-            .forEach {
-                if $0[0] == "R", let distance = Int($0[1]) {
-                    for _ in 0 ..< distance {
-                        lastHeadPosition = headPosition
-                        headPosition.x += 1
-                        if headPosition.distance(from: tailPosition) > 1 {
-                            tailPosition = lastHeadPosition
-                            tailBook.insert(tailPosition)
-                        }
-                    }
-                }
-
-                if $0[0] == "L", let distance = Int($0[1]) {
-                    for _ in 0 ..< distance {
-                        lastHeadPosition = headPosition
-                        headPosition.x -= 1
-                        if headPosition.distance(from: tailPosition) > 1 {
-                            tailPosition = lastHeadPosition
-                            tailBook.insert(tailPosition)
-                        }
-                    }
-                }
-
-                if $0[0] == "U", let distance = Int($0[1]) {
-                    for _ in 0 ..< distance {
-                        lastHeadPosition = headPosition
-                        headPosition.y -= 1
-                        if headPosition.distance(from: tailPosition) > 1 {
-                            tailPosition = lastHeadPosition
-                            tailBook.insert(tailPosition)
-                        }
-                    }
-                }
-
-                if $0[0] == "D", let distance = Int($0[1]) {
-                    for _ in 0 ..< distance {
-                        lastHeadPosition = headPosition
-                        headPosition.y += 1
-                        if headPosition.distance(from: tailPosition) > 1 {
-                            tailPosition = lastHeadPosition
-                            tailBook.insert(tailPosition)
-                        }
-                    }
-                }
-            }
-        return tailBook.count
+        simulate(input: input, knots: 2)
     }
 
     func solve2(input: String) -> Int {
-        simulate(input: input, knots: kno)
+        simulate(input: input, knots: 10)
     }
 
     private func simulate(input: String, knots: Int) -> Int {
@@ -97,9 +70,7 @@ class Day9 {
                         headPosition[0].x += 1
 
                         for idx in headPosition.indices.dropFirst() {
-                            if headPosition[idx].distance(from: headPosition[idx - 1]) > 1 {
-                                headPosition[idx].x += 1
-                            }
+                            headPosition[idx].moveIfNeeded(follow: headPosition[idx - 1])
                             if idx == headPosition.count - 1 {
                                 tailBook.insert(headPosition[idx])
                             }
@@ -112,9 +83,7 @@ class Day9 {
                         headPosition[0].x -= 1
 
                         for idx in headPosition.indices.dropFirst() {
-                            if headPosition[idx].distance(from: headPosition[idx - 1]) > 1 {
-                                headPosition[idx].x -= 1
-                            }
+                            headPosition[idx].moveIfNeeded(follow: headPosition[idx - 1])
                             if idx == headPosition.count - 1 {
                                 tailBook.insert(headPosition[idx])
                             }
@@ -125,11 +94,8 @@ class Day9 {
                 if $0[0] == "U", let distance = Int($0[1]) {
                     for _ in 0 ..< distance {
                         headPosition[0].y -= 1
-
                         for idx in headPosition.indices.dropFirst() {
-                            if headPosition[idx].distance(from: headPosition[idx - 1]) > 1 {
-                                headPosition[idx].y -= 1
-                            }
+                            headPosition[idx].moveIfNeeded(follow: headPosition[idx - 1])
                             if idx == headPosition.count - 1 {
                                 tailBook.insert(headPosition[idx])
                             }
@@ -142,9 +108,7 @@ class Day9 {
                         headPosition[0].y += 1
 
                         for idx in headPosition.indices.dropFirst() {
-                            if headPosition[idx].distance(from: headPosition[idx - 1]) > 1 {
-                                headPosition[idx].y += 1
-                            }
+                            headPosition[idx].moveIfNeeded(follow: headPosition[idx - 1])
                             if idx == headPosition.count - 1 {
                                 tailBook.insert(headPosition[idx])
                             }
@@ -156,6 +120,7 @@ class Day9 {
         if tailBook.count == 1, let last = headPosition.last, tailBook.contains(last) {
             tailBook.remove(last)
         }
+
         return tailBook.count
     }
 }
