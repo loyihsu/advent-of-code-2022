@@ -99,6 +99,15 @@ extension String {
             .components(separatedBy: separator)
             .compactMap(Int.init)
     }
+
+    @discardableResult
+    mutating func consumeFirst(_ charactersCount: Int = 1) -> String? {
+        guard count >= charactersCount else { return nil }
+        let array = Array(self)
+        let temp = String(array[0 ..< charactersCount])
+        removeFirst(charactersCount)
+        return temp
+    }
 }
 
 extension Array where Element == Character {

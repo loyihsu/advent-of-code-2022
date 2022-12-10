@@ -6,50 +6,6 @@
 //
 
 class Day2 {
-    enum Move: Int, Equatable {
-        case rock = 1
-        case paper = 2
-        case scissors = 3
-
-        static func getMove(symbol: String) -> Move? {
-            switch symbol {
-            case "A":
-                return .rock
-            case "B":
-                return .paper
-            case "C":
-                return .scissors
-            case "X":
-                return .rock
-            case "Y":
-                return .paper
-            case "Z":
-                return .scissors
-            default:
-                return nil
-            }
-        }
-    }
-
-    enum State: Int {
-        case win = 6
-        case draw = 3
-        case lose = 0
-
-        static func getWinState(from string: String) -> State? {
-            switch string {
-            case "X":
-                return .lose
-            case "Y":
-                return .draw
-            case "Z":
-                return .win
-            default:
-                return nil
-            }
-        }
-    }
-
     func solve1(input: String) -> Int {
         computeRaces(input: input) { elements in
             let otherMove = Move.getMove(symbol: elements[0])!
@@ -114,6 +70,54 @@ class Day2 {
             return .paper
         case .paper:
             return .scissors
+        }
+    }
+}
+
+// MARK: - Move
+
+private enum Move: Int, Equatable {
+    case rock = 1
+    case paper = 2
+    case scissors = 3
+
+    static func getMove(symbol: String) -> Move? {
+        switch symbol {
+        case "A":
+            return .rock
+        case "B":
+            return .paper
+        case "C":
+            return .scissors
+        case "X":
+            return .rock
+        case "Y":
+            return .paper
+        case "Z":
+            return .scissors
+        default:
+            return nil
+        }
+    }
+}
+
+// MARK: - State
+
+private enum State: Int {
+    case win = 6
+    case draw = 3
+    case lose = 0
+
+    static func getWinState(from string: String) -> State? {
+        switch string {
+        case "X":
+            return .lose
+        case "Y":
+            return .draw
+        case "Z":
+            return .win
+        default:
+            return nil
         }
     }
 }

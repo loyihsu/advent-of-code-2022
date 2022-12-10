@@ -6,26 +6,6 @@
 //
 
 class Day5 {
-    struct Command {
-        let count: Int
-        let from: Int
-        let to: Int
-
-        func apply(on stackMap: inout [[String]], persistOrdering: Bool) {
-            var temp = [String]()
-            for _ in 0 ..< count {
-                if let top = stackMap[from - 1].popLast() {
-                    temp.append(top)
-                }
-            }
-            if persistOrdering {
-                stackMap[to - 1].append(contentsOf: temp.reversed())
-            } else {
-                stackMap[to - 1].append(contentsOf: temp)
-            }
-        }
-    }
-
     func solve1(input: String) -> String {
         var (stackMap, commands) = parseInput(input)
 
@@ -99,13 +79,22 @@ class Day5 {
     }
 }
 
-private extension String {
-    @discardableResult
-    mutating func consumeFirst(_ charactersCount: Int = 1) -> String? {
-        guard count >= charactersCount else { return nil }
-        let array = Array(self)
-        let temp = String(array[0 ..< charactersCount])
-        removeFirst(charactersCount)
-        return temp
+private struct Command {
+    let count: Int
+    let from: Int
+    let to: Int
+
+    func apply(on stackMap: inout [[String]], persistOrdering: Bool) {
+        var temp = [String]()
+        for _ in 0 ..< count {
+            if let top = stackMap[from - 1].popLast() {
+                temp.append(top)
+            }
+        }
+        if persistOrdering {
+            stackMap[to - 1].append(contentsOf: temp.reversed())
+        } else {
+            stackMap[to - 1].append(contentsOf: temp)
+        }
     }
 }

@@ -6,21 +6,6 @@
 //
 
 class Day10 {
-    enum Command {
-        case addx(value: Int)
-        case noop
-
-        func exec(register: inout Int, cycles: inout Int) {
-            switch self {
-            case let .addx(value):
-                register += value
-                cycles += 2
-            case .noop:
-                cycles += 1
-            }
-        }
-    }
-
     func solve1(input: String) -> Int {
         let logs = getLogs(input: input)
         let checkpoints = [20, 60, 100, 140, 180, 220]
@@ -76,5 +61,20 @@ class Day10 {
             .chunked(40)
             .map(String.init(_:))
             .joined(separator: "\n")
+    }
+}
+
+private enum Command {
+    case addx(value: Int)
+    case noop
+
+    func exec(register: inout Int, cycles: inout Int) {
+        switch self {
+        case let .addx(value):
+            register += value
+            cycles += 2
+        case .noop:
+            cycles += 1
+        }
     }
 }

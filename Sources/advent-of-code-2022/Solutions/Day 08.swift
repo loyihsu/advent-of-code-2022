@@ -84,45 +84,10 @@ class Day8 {
     }
 
     private func findScore(list: [[Int]], idx: Int, jdx: Int) -> Int {
-        return Direction.allCases
+        Direction.allCases
             .reduce(1) {
                 $0 * findNavigationDistance(direction: $1, list: list, idx: idx, jdx: jdx)
             }
-    }
-
-    enum Direction: CaseIterable {
-        case top, left, right, bottom
-
-        static var allCases: [Direction] {
-            return [.top, .left, .right, .bottom]
-        }
-
-        var navigationMode: NavigationMode {
-            switch self {
-            case .top, .bottom:
-                return .vertical
-            case .left, .right:
-                return .horizontal
-            }
-        }
-
-        func getRange(idx: Int, jdx: Int, length: (first: Int, second: Int)) -> [Int] {
-            switch self {
-            case .top:
-                return Array((0 ..< idx).reversed())
-            case .bottom:
-                return Array(idx + 1 ..< length.first)
-            case .left:
-                return Array((0 ..< jdx).reversed())
-            case .right:
-                return Array(jdx + 1 ..< length.second)
-            }
-        }
-    }
-
-    enum NavigationMode {
-        case horizontal
-        case vertical
     }
 
     private func findNavigationDistance(direction: Direction, list: [[Int]], idx: Int, jdx: Int) -> Int {
@@ -137,4 +102,41 @@ class Day8 {
         }
         return distance
     }
+}
+
+// MARK: - Navigation Helpers
+
+private enum Direction: CaseIterable {
+    case top, left, right, bottom
+
+    static var allCases: [Direction] {
+        [.top, .left, .right, .bottom]
+    }
+
+    var navigationMode: NavigationMode {
+        switch self {
+        case .top, .bottom:
+            return .vertical
+        case .left, .right:
+            return .horizontal
+        }
+    }
+
+    func getRange(idx: Int, jdx: Int, length: (first: Int, second: Int)) -> [Int] {
+        switch self {
+        case .top:
+            return Array((0 ..< idx).reversed())
+        case .bottom:
+            return Array(idx + 1 ..< length.first)
+        case .left:
+            return Array((0 ..< jdx).reversed())
+        case .right:
+            return Array(jdx + 1 ..< length.second)
+        }
+    }
+}
+
+private enum NavigationMode {
+    case horizontal
+    case vertical
 }

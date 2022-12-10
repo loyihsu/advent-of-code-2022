@@ -7,45 +7,6 @@
 
 import Foundation
 
-struct Position: Hashable {
-    var x = 0
-    var y = 0
-
-    func distance(from another: Position) -> Int {
-        let xDistance = Double(x - another.x)
-        let yDistance = Double(y - another.y)
-        return Int(sqrt(xDistance * xDistance + yDistance * yDistance))
-    }
-
-    mutating func moveIfNeeded(follow another: Position) {
-        guard distance(from: another) > 1 else { return }
-        if x == another.x {
-            if y > another.y {
-                y -= 1
-            } else if y < another.y {
-                y += 1
-            }
-        } else if y == another.y {
-            if x > another.x {
-                x -= 1
-            } else if x < another.x {
-                x += 1
-            }
-        } else {
-            if x > another.x {
-                x -= 1
-            } else if x < another.x {
-                x += 1
-            }
-            if y > another.y {
-                y -= 1
-            } else if y < another.y {
-                y += 1
-            }
-        }
-    }
-}
-
 class Day9 {
     func solve1(input: String) -> Int {
         simulate(input: input, knots: 2)
@@ -122,5 +83,44 @@ class Day9 {
         }
 
         return tailBook.count
+    }
+}
+
+private struct Position: Hashable {
+    var x = 0
+    var y = 0
+
+    func distance(from another: Position) -> Int {
+        let xDistance = Double(x - another.x)
+        let yDistance = Double(y - another.y)
+        return Int(sqrt(xDistance * xDistance + yDistance * yDistance))
+    }
+
+    mutating func moveIfNeeded(follow another: Position) {
+        guard distance(from: another) > 1 else { return }
+        if x == another.x {
+            if y > another.y {
+                y -= 1
+            } else if y < another.y {
+                y += 1
+            }
+        } else if y == another.y {
+            if x > another.x {
+                x -= 1
+            } else if x < another.x {
+                x += 1
+            }
+        } else {
+            if x > another.x {
+                x -= 1
+            } else if x < another.x {
+                x += 1
+            }
+            if y > another.y {
+                y -= 1
+            } else if y < another.y {
+                y += 1
+            }
+        }
     }
 }

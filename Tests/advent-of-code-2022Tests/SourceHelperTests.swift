@@ -223,4 +223,14 @@ final class SourceHelperTests: XCTestCase {
         XCTAssertFalse(first.contains(second))
         XCTAssertFalse(second.contains(first))
     }
+
+    func test_consume() {
+        var string = "123 456 789"
+        XCTAssertEqual(string.consumeFirst(3), "123")
+        XCTAssertEqual(string.consumeFirst(1), " ")
+        XCTAssertEqual(string.consumeFirst(3), "456")
+        XCTAssertEqual(string.consumeFirst(1), " ")
+        XCTAssertEqual(string.consumeFirst(3), "789")
+        XCTAssertNil(string.consumeFirst(1))
+    }
 }

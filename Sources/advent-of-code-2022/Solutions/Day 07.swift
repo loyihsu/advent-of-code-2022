@@ -78,7 +78,9 @@ class Day7 {
     }
 }
 
-enum Command {
+// MARK: - Command
+
+private enum Command {
     case changeDirectory(nextPosition: String)
     case list
 
@@ -98,13 +100,15 @@ enum Command {
     }
 }
 
-protocol Entry: AnyObject {
+// MARK: - Entry
+
+private protocol Entry: AnyObject {
     var name: String { get }
     var size: Int { get }
     func insertOrUpdate(_ entry: Entry, structure: [String])
 }
 
-extension Entry {
+private extension Entry {
     func insertOrUpdate(_: Entry, structure _: [String]) {}
 
     func findAllDirectories() -> [(String, Int)] {
@@ -118,7 +122,7 @@ extension Entry {
     }
 }
 
-class Directory: Entry {
+private class Directory: Entry {
     let name: String
     var sub: [Entry]
 
