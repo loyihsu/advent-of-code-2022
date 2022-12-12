@@ -8,7 +8,7 @@
 let sample = try! fetchSampleData(filename: "Inputs/Sample")
 let input = try! fetchSampleData(filename: "Inputs/Input")
 
-let solver = Day11()
+let solver = Day12()
 
 let sample1 = solver.solve1(input: sample)
 print("SAMPLE 1 -->")
