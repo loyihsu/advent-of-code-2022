@@ -19,7 +19,7 @@ class Day12 {
         return base
     }()
 
-    private func getEvaluation(_ character: Character) -> Int {
+    private func getElevation(_ character: Character) -> Int {
         elevations[character, default: 0]
     }
 
@@ -82,25 +82,25 @@ class Day12 {
             visited.append(this)
 
             if let left = this.getLeft(in: list, from: unvisited),
-               compareUp(lhs: list[unvisited[left].row][unvisited[left].col], rhs: list[this.row][this.col])
+               compare(lhs: list[unvisited[left].row][unvisited[left].col], rhs: list[this.row][this.col])
             {
                 unvisited[left].cost = min(unvisited[left].cost, this.cost + 1)
             }
 
             if let right = this.getRight(in: list, from: unvisited),
-               compareUp(lhs: list[unvisited[right].row][unvisited[right].col], rhs: list[this.row][this.col])
+               compare(lhs: list[unvisited[right].row][unvisited[right].col], rhs: list[this.row][this.col])
             {
                 unvisited[right].cost = min(unvisited[right].cost, this.cost + 1)
             }
 
             if let up = this.getUp(in: list, from: unvisited),
-               compareUp(lhs: list[unvisited[up].row][unvisited[up].col], rhs: list[this.row][this.col])
+               compare(lhs: list[unvisited[up].row][unvisited[up].col], rhs: list[this.row][this.col])
             {
                 unvisited[up].cost = min(unvisited[up].cost, this.cost + 1)
             }
 
             if let down = this.getDown(in: list, from: unvisited),
-               compareUp(lhs: list[unvisited[down].row][unvisited[down].col], rhs: list[this.row][this.col])
+               compare(lhs: list[unvisited[down].row][unvisited[down].col], rhs: list[this.row][this.col])
             {
                 unvisited[down].cost = min(unvisited[down].cost, this.cost + 1)
             }
@@ -121,7 +121,7 @@ class Day12 {
         var visited = [Node]()
 
         var ended: Bool {
-            visited.contains { getEvaluation(list[$0.row][$0.col]) == 0 }
+            visited.contains { getElevation(list[$0.row][$0.col]) == 0 }
         }
 
         let start = unvisited.firstIndex(where: { $0.row == start.row && $0.col == start.col })!
@@ -131,40 +131,36 @@ class Day12 {
             visited.append(this)
 
             if let left = this.getLeft(in: list, from: unvisited),
-               compareDown(lhs: list[unvisited[left].row][unvisited[left].col], rhs: list[this.row][this.col])
+               compare(lhs: list[this.row][this.col], rhs: list[unvisited[left].row][unvisited[left].col])
             {
                 unvisited[left].cost = min(unvisited[left].cost, this.cost + 1)
             }
 
             if let right = this.getRight(in: list, from: unvisited),
-               compareDown(lhs: list[unvisited[right].row][unvisited[right].col], rhs: list[this.row][this.col])
+               compare(lhs: list[this.row][this.col], rhs: list[unvisited[right].row][unvisited[right].col])
             {
                 unvisited[right].cost = min(unvisited[right].cost, this.cost + 1)
             }
 
             if let up = this.getUp(in: list, from: unvisited),
-               compareDown(lhs: list[unvisited[up].row][unvisited[up].col], rhs: list[this.row][this.col])
+               compare(lhs: list[this.row][this.col], rhs: list[unvisited[up].row][unvisited[up].col])
             {
                 unvisited[up].cost = min(unvisited[up].cost, this.cost + 1)
             }
 
             if let down = this.getDown(in: list, from: unvisited),
-               compareDown(lhs: list[unvisited[down].row][unvisited[down].col], rhs: list[this.row][this.col])
+               compare(lhs: list[this.row][this.col], rhs: list[unvisited[down].row][unvisited[down].col])
             {
                 unvisited[down].cost = min(unvisited[down].cost, this.cost + 1)
             }
         }
 
-        guard let result = visited.first(where: { getEvaluation(list[$0.row][$0.col]) == 0 }) else { return Int.max }
+        guard let result = visited.first(where: { getElevation(list[$0.row][$0.col]) == 0 }) else { return Int.max }
         return result.cost
     }
 
-    private func compareUp(lhs: Character, rhs: Character) -> Bool {
-        getEvaluation(lhs) - getEvaluation(rhs) <= 1
-    }
-
-    private func compareDown(lhs: Character, rhs: Character) -> Bool {
-        getEvaluation(lhs) - getEvaluation(rhs) >= -1
+    private func compare(lhs: Character, rhs: Character) -> Bool {
+        getElevation(lhs) - getElevation(rhs) <= 1
     }
 
     private func minAndPopByCost(_ unvisited: inout [Node]) -> Node? {
