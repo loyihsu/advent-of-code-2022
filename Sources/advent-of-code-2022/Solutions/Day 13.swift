@@ -12,7 +12,7 @@ class Day13 {
         return list
             .enumerated()
             .map {
-                return ($0, $1.components(separatedBy: .newlines).map { unwrapList($0) })
+                ($0, $1.components(separatedBy: .newlines).map { unwrapList($0) })
             }
             .filter { compare($1[0], $1[1]) <= 0 }
             .map { index, _ in
@@ -93,8 +93,7 @@ class Day13 {
                     return left - right
                 }
             } else {
-                var left = item.0
-                var right = item.1
+                var (left, right) = item
 
                 if Int(left) != nil {
                     left = "[\(left)]"
