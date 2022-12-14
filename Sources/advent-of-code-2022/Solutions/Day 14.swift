@@ -113,11 +113,11 @@ private struct Map {
     init(input: String) {
         let paths = input
             .splitLines(shouldTrimWhitespacesAndNewlines: true)
-            .map {
-                $0
+            .map { (line: String) -> [Coordinate] in
+                line
                     .splitList(separator: " -> ", shouldTrimWhitespacesAndNewlines: true)
-                    .map {
-                        let list = $0.splitList(separator: ",", shouldTrimWhitespacesAndNewlines: true)
+                    .map { (coordinate: String) -> Coordinate in
+                        let list = coordinate.splitList(separator: ",", shouldTrimWhitespacesAndNewlines: true)
                         return Coordinate(x: Int(list[0])!, y: Int(list[1])!)
                     }
             }
