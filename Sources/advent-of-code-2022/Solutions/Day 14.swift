@@ -36,7 +36,7 @@ class Day14 {
 
             map.insert(newSand)
 
-            if let abyssThreshold, newSand.y > abyssThreshold {
+            if let abyssThreshold = abyssThreshold, newSand.y > abyssThreshold {
                 break
             }
 
