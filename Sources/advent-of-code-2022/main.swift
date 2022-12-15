@@ -8,13 +8,13 @@
 let sample = try! fetchSampleData(filename: "Inputs/Sample")
 let input = try! fetchSampleData(filename: "Inputs/Input")
 
-let solver = Day14()
+let solver = Day15()
 
-let sample1 = solver.solve1(input: sample)
+let sample1 = solver.solve1(input: sample, caringRow: 10)
 print("SAMPLE 1 -->")
 print(sample1)
 
-let result1 = solver.solve1(input: input)
+let result1 = solver.solve1(input: input, caringRow: 2_000_000)
 print("RESULT 1 -->")
 print(result1)
 
