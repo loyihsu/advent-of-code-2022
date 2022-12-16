@@ -10,11 +10,10 @@ import Foundation
 class Day15 {
     func solve1(input: String, caringRow: Int) -> Int {
         let points = handleInput(input)
-            .flatMap { sensor, closest in
+            .flatMap { sensor, closest -> [Coordinate] in
                 let distance = sensor.distance(closest)
                 return sensor.expand(distance, existing: closest, caringYRange: caringRow ... caringRow)
             }
-
         return Set(points).count
     }
 
@@ -74,7 +73,7 @@ class Day15 {
                 sensorRaw.consumeFirst("Sensor at ".count)
 
                 let sensorInts = sensorRaw.components(separatedBy: ", ")
-                    .compactMap { string in
+                    .compactMap { (string: String) -> Int? in
                         var string = string
                         string.consumeFirst(2)
                         return Int(string)
@@ -86,7 +85,7 @@ class Day15 {
                 closestRaw.consumeFirst("closest beacon is at ".count)
 
                 let closestInts = closestRaw.components(separatedBy: ", ")
-                    .compactMap { string in
+                    .compactMap { (string: String) -> Int? in
                         var string = string
                         string.consumeFirst(2)
                         return Int(string)
