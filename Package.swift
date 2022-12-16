@@ -22,10 +22,7 @@ let package = Package(
         ),
         .testTarget(
             name: "advent-of-code-2022Tests",
-            dependencies: ["advent-of-code-2022"],
-            resources: [
-                .copy("Daily Tests"),
-            ]
+            dependencies: ["advent-of-code-2022"]
         ),
     ]
 )
